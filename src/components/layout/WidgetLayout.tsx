@@ -1,29 +1,32 @@
 import * as React from 'react';
 
+// Redux
+import * as actions from '../../actions/layout-actions';
+import { StoreState } from '../../types/StoreState';
+import { connect, Dispatch } from 'react-redux';
+
 import { Responsive, WidthProvider } from 'react-grid-layout';
 var ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 import 'react-grid-layout/css/styles.css';
 
+import Layout from '../../types/Layout';
+
 export interface Props {
+    layout: Layout;
+    onLayoutChange: (layout: {}, layouts: {}) => void; 
 }
 
 class WidgetLayout extends React.Component<Props, {}> {
     render() {
-        var layout = [
-            {i: 'messages2', x: 0, y: 0, w: 2, h: 2, minW: 2, minH: 2},
-            {i: 'events', x: 2, y: 0, w: 10, h: 2},
-            {i: 'messages', x: 0, y: 1, w: 6, h: 3, minW: 2, minH: 2},
-            {i: 'directory', x: 6, y: 1, w: 6, h: 3 },      
-        ];
-
-        var layouts = {lg: layout};        
+        var layouts = {lg: this.props.layout};        
 
         return (
             <div>
                 <ResponsiveReactGridLayout 
                     className="layout" 
                     layouts={layouts}
+                    onLayoutChange={this.props.onLayoutChange}
                     breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
                     cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
                     rowHeight={94} 
@@ -52,4 +55,16 @@ var divStyle = {
   backgroundColor: 'blanchedalmond'
 };
 
-export default WidgetLayout;
+export function mapStateToProps(state: StoreState) {
+  return {
+      layout: state.layout.layout
+  };
+}
+
+export function mapDispatchToProps(dispatch: Dispatch<{}>) {
+  return {
+      onLayoutChange: (layout, layouts) => dispatch(actions.layoutSave(layout)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WidgetLayout);

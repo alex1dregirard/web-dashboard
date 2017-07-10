@@ -7,5 +7,8 @@ export interface StoreState {
 
 // Partie du store gérant la partie layout
 export interface StoreLayoutState {
-    layout: Array<Layout>; 
+    layouts: {
+        lg: Layout[];
+    }; 
+    components: string[];
 }

@@ -13,57 +13,56 @@ import 'react-grid-layout/css/styles.css';
 import Layout from '../../types/Layout';
 
 export interface Props {
-    layout: Layout;
+    layouts: {
+        lg: Layout[];
+    };
+    components: string[];
     onLayoutChange: (layout: {}, layouts: {}) => void; 
 }
 
 class WidgetLayout extends React.Component<Props, {}> {
     render() {
-        var layouts = {lg: this.props.layout};        
-
         return (
             <div>
                 <ResponsiveReactGridLayout 
                     className="layout" 
-                    layouts={layouts}
-                    onLayoutChange={this.props.onLayoutChange}
-                    breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-                    cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
-                    rowHeight={94} 
+                    layouts={this.props.layouts}
+                    onLayoutChange={this.props.onLayoutChange}  
+                    // breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+                    // cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
+                    // rowHeight={94} 
                     isDraggable={true} 
                     isResizable={true}
                 >
-                    <div style={divStyle} key={'messages'} >
-                        messages
-                    </div>
-                    <div style={divStyle} key={'events'}>
-                        evenements
-                    </div>        
-                    <div style={divStyle} key={'directory'}>
-                        annuaire
-                    </div>
-                    <div style={divStyle} key={'messages2'}>
-                        messages 2
-                    </div>          
+                    {
+                        this.props.components.map(function(component: string){
+                            var divStyle = {
+                                backgroundColor: 'blanchedalmond'
+                            };
+
+                            return (
+                                <div key={component} style={divStyle} >
+                                    {component}
+                                </div>
+                            );
+                        })
+                    }
                 </ResponsiveReactGridLayout>
             </div>
         );
     }
 }
 
-var divStyle = {
-  backgroundColor: 'blanchedalmond'
-};
-
 export function mapStateToProps(state: StoreState) {
   return {
-      layout: state.layout.layout
+      layouts: state.layout.layouts,
+      components: state.layout.components
   };
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<{}>) {
   return {
-      onLayoutChange: (layout, layouts) => dispatch(actions.layoutSave(layout)),
+      onLayoutChange: (layout, layouts) => dispatch(actions.layoutSave(layout, layouts)),
   };
 }
 

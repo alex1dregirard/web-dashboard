@@ -9,6 +9,7 @@ const initialLayoutState = {
             {i: 'events', x: 2, y: 0, w: 10, h: 2},
             {i: 'directory', x: 0, y: 1, w: 6, h: 3, minW: 2, minH: 2},
             {i: 'tools', x: 6, y: 1, w: 6, h: 3 },
+            {i: 'actuality', x: 1, y: 1, w: 6, h: 3 },
         ]
     },
     components : ['messages', 'events', 'directory', 'tools', 'other']

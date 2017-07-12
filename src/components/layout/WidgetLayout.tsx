@@ -12,6 +12,8 @@ import 'react-grid-layout/css/styles.css';
 
 import Layout from '../../types/Layout';
 
+import Actuality from '../../externals-components/jalios/Actuality';
+
 export interface Props {
     layouts: {
         lg: Layout[];
@@ -36,9 +38,9 @@ class WidgetLayout extends React.Component<Props, {}> {
                 >
                     {
                         this.props.components.map(function(component: string){
-                            var divStyle = {
-                                backgroundColor: 'blanchedalmond'
-                            };
+                            // var divStyle = {
+                            //    backgroundColor: 'blanchedalmond'
+                            // };
 
                             return (
                                 <div key={component} style={divStyle} >
@@ -47,11 +49,19 @@ class WidgetLayout extends React.Component<Props, {}> {
                             );
                         })
                     }
+                    <div key={'actuality'} style={divStyle} >
+                        <Actuality />
+                    </div>                    
+                    
                 </ResponsiveReactGridLayout>
             </div>
         );
     }
 }
+
+var divStyle = {
+    backgroundColor: 'blanchedalmond'
+};
 
 export function mapStateToProps(state: StoreState) {
   return {

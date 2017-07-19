@@ -12,7 +12,8 @@ import 'react-grid-layout/css/styles.css';
 
 import Layout from '../../types/Layout';
 
-import Actuality from '../../externals-components/jalios/Actuality';
+import { Article } from '../../externals-components/jalios/jalios-types';
+import { ArticleComponent } from '../../externals-components/jalios/ArticleComponent';
 
 export interface Props {
     layouts: {
@@ -24,7 +25,18 @@ export interface Props {
 
 class WidgetLayout extends React.Component<Props, {}> {
     render() {
+        let article: Article = {
+            titre: 'Présentation des nouveaux locaux',
+            // tslint:disable-next-line:max-line-length
+            // tslint:disable-next-line:max-line-length
+            resume: 'Les architectes viennent de nous fournir les dernières projections de nos nouveaux locaux. Nous les voulons modernes, accueillants et ouverts. Nous sommes convaincus qu\'ils nous aiderons dans nos futurs succès.',
+            auteur: 'Alexandre GIRARD',
+            illustration: 'https://placeimg.com/250/120/arch',
+            url: ''
+        };
+
         return (
+
             <div>
                 <ResponsiveReactGridLayout 
                     className="layout" 
@@ -50,18 +62,28 @@ class WidgetLayout extends React.Component<Props, {}> {
                         })
                     }
                     <div key={'actuality'} style={divStyle} >
-                        <Actuality />
+                        <ArticleComponent article={article} />
                     </div>                    
-                    
                 </ResponsiveReactGridLayout>
             </div>
         );
     }
 }
 
-var divStyle = {
-    backgroundColor: 'blanchedalmond'
+var divStyle: React.CSSProperties = {
+    backgroundColor: 'blanchedalmond',
+    display: 'flex',
+
 };
+
+/*
+var divStyle2 = {
+    backgroundColor: 'blue',
+    height: '100%',
+    display: 'flex',
+    padding: '10'
+};
+*/
 
 export function mapStateToProps(state: StoreState) {
   return {
